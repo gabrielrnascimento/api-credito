@@ -1,5 +1,7 @@
+import { ErroInesperado } from '../../../domain/errors';
 import { ClienteHttpSpy } from '../../test';
 import { mockEntradaEncontraEstadoDTO } from '../../test/mock-estado';
+import { CodigoStatusHttp } from '../../types/http';
 import { RemotoEncontraEstado } from './remoto-encontra-estado';
 
 type SutTypes = {
@@ -25,5 +27,16 @@ describe('RemotoEncontraEstado', () => {
 
     expect(clienteHttpSpy.url).toBe(`${url}/${mockEntradaEncontraEstadoDTO.cep}/json`);
     expect(clienteHttpSpy.method).toBe('get');
+  });
+
+  test('deve lançar ErroInesperado se ClienteHttp retornar uma resposta de erro http', async () => {
+    const { sut, clienteHttpSpy } = criaSut();
+    clienteHttpSpy.resposta = {
+      codigoStatus: CodigoStatusHttp.erroServidor
+    };
+
+    const promessa = sut.encontra(mockEntradaEncontraEstadoDTO);
+
+    await expect(promessa).rejects.toThrow(new ErroInesperado());
   });
 });

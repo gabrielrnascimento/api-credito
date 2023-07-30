@@ -7,7 +7,7 @@ export class ClienteHttpSpy<R = any> implements ClienteHttp<R> {
   public body?: any;
   public headers?: any;
   public data?: any;
-  public response?: RespostaHttp = {
+  public resposta?: RespostaHttp = {
     codigoStatus: CodigoStatusHttp.ok
   };
 
@@ -17,6 +17,6 @@ export class ClienteHttpSpy<R = any> implements ClienteHttp<R> {
     this.body = request.body;
     this.headers = request.headers;
     this.data = request.data;
-    return this.response;
+    return this.resposta;
   }
 }
