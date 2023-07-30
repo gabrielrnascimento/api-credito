@@ -9,7 +9,8 @@ export type RequisicaoHttp = {
 };
 
 export enum CodigoStatusHttp {
-  ok = 200
+  ok = 200,
+  erroServidor = 500
 }
 
 export type RespostaHttp<B = any> = {
