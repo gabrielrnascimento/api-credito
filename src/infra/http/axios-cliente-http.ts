@@ -4,7 +4,10 @@ import { type RequisicaoHttp, type RespostaHttp } from '../../data/types/http';
 
 export class AxiosClienteHttp implements ClienteHttp {
   async requisicao (requisicao: RequisicaoHttp): Promise<RespostaHttp<any>> {
-    await axios.request(requisicao);
-    return null;
+    const respostaAxios = await axios.request(requisicao);
+    return {
+      codigoStatus: respostaAxios.status,
+      body: respostaAxios.data
+    };
   }
 }
