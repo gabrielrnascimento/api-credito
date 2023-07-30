@@ -20,3 +20,11 @@ export class ClienteHttpSpy<R = any> implements ClienteHttp<R> {
     return this.resposta;
   }
 }
+
+export const mockRequisicaoHttp = (): RequisicaoHttp => ({
+  method: 'post',
+  url: 'qualquer_valor',
+  body: { field: 'qualquer_valor' },
+  headers: { field: 'qualquer_valor' },
+  data: { field: 'qualquer_valor' }
+});
