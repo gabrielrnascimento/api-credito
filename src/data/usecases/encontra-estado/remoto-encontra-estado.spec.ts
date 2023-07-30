@@ -1,6 +1,6 @@
 import { ErroInesperado } from '../../../domain/errors';
 import { ClienteHttpSpy } from '../../test';
-import { mockEntradaEncontraEstadoDTO } from '../../test/mock-estado';
+import { mockEntradaEncontraEstadoDTO, mockModeloEstado } from '../../test/mock-estado';
 import { CodigoStatusHttp } from '../../types/http';
 import { RemotoEncontraEstado } from './remoto-encontra-estado';
 
@@ -11,6 +11,7 @@ type SutTypes = {
 
 const criaSut = (url: string = 'qualquer_url'): SutTypes => {
   const clienteHttpSpy = new ClienteHttpSpy();
+  clienteHttpSpy.resposta.body = mockModeloEstado;
   const sut = new RemotoEncontraEstado(url, clienteHttpSpy);
   return {
     sut,
@@ -38,5 +39,13 @@ describe('RemotoEncontraEstado', () => {
     const promessa = sut.encontra(mockEntradaEncontraEstadoDTO);
 
     await expect(promessa).rejects.toThrow(new ErroInesperado());
+  });
+
+  test('deve retornar ModeloEstado se ClienteHttp retornar 200', async () => {
+    const { sut } = criaSut();
+
+    const resposta = await sut.encontra(mockEntradaEncontraEstadoDTO);
+
+    expect(resposta).toEqual(mockModeloEstado);
   });
 });
