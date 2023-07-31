@@ -3,7 +3,7 @@ import { type ModeloEstado } from '../../../domain/models';
 import { type EncontraEstado } from '../../../domain/usecases';
 import { type EntradaEncontraEstadoDTO } from '../../dtos';
 import { type ClienteHttp } from '../../interfaces/cliente-http';
-import { CodigoStatusHttp, type RequisicaoHttp } from '../../types/http';
+import { CodigoStatusHttp, type RequisicaoHttp } from '../../types';
 
 export class RemotoEncontraEstado implements EncontraEstado {
   constructor (
