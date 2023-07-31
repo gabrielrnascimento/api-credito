@@ -2,20 +2,20 @@ import { type ModeloEstado } from '../../domain/models';
 import { type EntradaEncontraEstadoDTO } from '../dtos';
 
 export const mockEntradaEncontraEstadoDTO: EntradaEncontraEstadoDTO = {
-  cep: '88036-160'
+  cep: '02377-080'
 };
 
 export const mockRespostaViaCepAPI = {
-  cep: '88036-160',
-  logradouro: 'Rua Vereador Hélio Abreu',
+  cep: '02377-080',
+  logradouro: 'Rua Professor Antônio Castelar de Franceschi',
   complemento: '',
-  bairro: 'Trindade',
-  localidade: 'Florianópolis',
-  uf: 'SC',
-  ibge: '4205407',
-  gia: '',
-  ddd: '48',
-  siafi: '8105'
+  bairro: 'Horto Florestal',
+  localidade: 'São Paulo',
+  uf: 'SP',
+  ibge: '3550308',
+  gia: '1004',
+  ddd: '11',
+  siafi: '7107'
 };
 
 export const mockModeloEstado: ModeloEstado = {
