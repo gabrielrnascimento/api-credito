@@ -1,4 +1,4 @@
-import { DbEncontraPrecoRepositorioStub, mockModeloEstado } from '../../test';
+import { DbEncontraPrecoRepositorioStub, mockModeloEstado, mockModeloPreco } from '../../test';
 import { DbEncontraPreco } from './db-encontra-preco';
 
 type SutTypes = {
@@ -35,5 +35,13 @@ describe('DbEncontraPreco', () => {
     const resposta = sut.encontra(mockModeloEstado);
 
     await expect(resposta).rejects.toThrow(new Error());
+  });
+
+  test('deve retornar ModeloPreco em caso de sucesso', async () => {
+    const { sut } = criaSut();
+
+    const resposta = await sut.encontra(mockModeloEstado);
+
+    expect(resposta).toBe(mockModeloPreco);
   });
 });
