@@ -27,4 +27,13 @@ describe('DbEncontraPreco', () => {
       uf: mockModeloEstado.uf
     });
   });
+
+  test('deve lançar erro se DbEncontraPrecoRepositorio lançar erro', async () => {
+    const { sut, dbEncontraPrecoRepositorio } = criaSut();
+    jest.spyOn(dbEncontraPrecoRepositorio, 'encontra').mockRejectedValueOnce(new Error());
+
+    const resposta = sut.encontra(mockModeloEstado);
+
+    await expect(resposta).rejects.toThrow(new Error());
+  });
 });
