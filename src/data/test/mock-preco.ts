@@ -12,7 +12,7 @@ export const mockModeloEstadoPreco: ModeloEstadoPreco = {
 };
 
 export class DbEncontraPrecoRepositorioStub implements DbEncontraPrecoRepositorio {
-  async encontraPreco (data: ModeloEstado): Promise<ModeloEstadoPreco> {
+  async encontraPreco (dados: ModeloEstado): Promise<ModeloEstadoPreco> {
     return mockModeloEstadoPreco;
   }
 }

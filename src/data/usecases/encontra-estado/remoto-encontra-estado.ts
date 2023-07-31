@@ -14,10 +14,10 @@ export class RemotoEncontraEstado implements EncontraEstado {
     this.clienteHttp = clienteHttp;
   }
 
-  async encontra (data: EntradaEncontraEstadoDTO): Promise<ModeloEstado> {
+  async encontra (dados: EntradaEncontraEstadoDTO): Promise<ModeloEstado> {
     const requisicao: RequisicaoHttp = {
       method: 'get',
-      url: `${this.url}/${data.cep}/json`
+      url: `${this.url}/${dados.cep}/json`
     };
 
     const resposta = await this.clienteHttp.requisicao(requisicao);
