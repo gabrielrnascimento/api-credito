@@ -1,4 +1,4 @@
-import { type ModeloEstado } from '../../domain/models/modelo-estado';
+import { type ModeloEstado } from '../../domain/models';
 import { type EntradaEncontraEstadoDTO } from '../dtos';
 
 export const mockEntradaEncontraEstadoDTO: EntradaEncontraEstadoDTO = {
