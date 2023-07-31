@@ -1,4 +1,4 @@
-import { type ClienteHttp } from '../interfaces/cliente-http';
+import { type ClienteHttp } from '../interfaces';
 import { type MetodoHttp, type RespostaHttp, CodigoStatusHttp, type RequisicaoHttp } from '../types/http';
 
 export class ClienteHttpSpy<R = any> implements ClienteHttp<R> {

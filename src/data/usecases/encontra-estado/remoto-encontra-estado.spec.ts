@@ -1,6 +1,5 @@
 import { ErroInesperado } from '../../../domain/errors';
-import { ClienteHttpSpy } from '../../test';
-import { mockEntradaEncontraEstadoDTO, mockModeloEstado } from '../../test/mock-estado';
+import { ClienteHttpSpy, mockEntradaEncontraEstadoDTO, mockModeloEstado } from '../../test';
 import { CodigoStatusHttp } from '../../types/http';
 import { RemotoEncontraEstado } from './remoto-encontra-estado';
 
