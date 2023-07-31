@@ -8,7 +8,6 @@ export class DbEncontraPreco implements EncontraPreco {
   }
 
   async encontra (data: ModeloEstado): Promise<ModeloPreco> {
-    await this.dbEncontraPrecoRepositorio.encontra(data);
-    return null;
+    return await this.dbEncontraPrecoRepositorio.encontra(data);
   }
 }
