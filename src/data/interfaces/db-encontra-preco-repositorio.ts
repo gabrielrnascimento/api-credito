@@ -1,6 +1,6 @@
-import { type ModeloPreco } from '../../domain/models';
 import { type EntradaEncontraPrecoDTO } from '../dtos';
+import { type ModeloEstadoPreco } from '../types/encontra-preco';
 
 export interface DbEncontraPrecoRepositorio {
-  encontra: (data: EntradaEncontraPrecoDTO) => Promise<ModeloPreco>
+  encontraPreco: (data: EntradaEncontraPrecoDTO) => Promise<ModeloEstadoPreco>
 }

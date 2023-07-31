@@ -7,7 +7,8 @@ export class DbEncontraPreco implements EncontraPreco {
     this.dbEncontraPrecoRepositorio = dbEncontraPrecoRepositorio;
   }
 
-  async encontra (data: ModeloEstado): Promise<ModeloPreco> {
-    return await this.dbEncontraPrecoRepositorio.encontra(data);
+  async encontraPreco (data: ModeloEstado): Promise<ModeloPreco> {
+    const { preco } = await this.dbEncontraPrecoRepositorio.encontraPreco(data);
+    return { preco };
   }
 }

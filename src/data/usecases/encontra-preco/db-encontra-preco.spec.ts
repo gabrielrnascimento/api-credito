@@ -19,9 +19,9 @@ const criaSut = (): SutTypes => {
 describe('DbEncontraPreco', () => {
   test('deve chamar DbEncontraPrecoRepositorio com os valores corretos', async () => {
     const { sut, dbEncontraPrecoRepositorio } = criaSut();
-    const encontraSpy = jest.spyOn(dbEncontraPrecoRepositorio, 'encontra');
+    const encontraSpy = jest.spyOn(dbEncontraPrecoRepositorio, 'encontraPreco');
 
-    await sut.encontra(mockModeloEstado);
+    await sut.encontraPreco(mockModeloEstado);
 
     expect(encontraSpy).toHaveBeenCalledWith({
       uf: mockModeloEstado.uf
@@ -30,9 +30,9 @@ describe('DbEncontraPreco', () => {
 
   test('deve lançar erro se DbEncontraPrecoRepositorio lançar erro', async () => {
     const { sut, dbEncontraPrecoRepositorio } = criaSut();
-    jest.spyOn(dbEncontraPrecoRepositorio, 'encontra').mockRejectedValueOnce(new Error());
+    jest.spyOn(dbEncontraPrecoRepositorio, 'encontraPreco').mockRejectedValueOnce(new Error());
 
-    const resposta = sut.encontra(mockModeloEstado);
+    const resposta = sut.encontraPreco(mockModeloEstado);
 
     await expect(resposta).rejects.toThrow(new Error());
   });
@@ -40,8 +40,8 @@ describe('DbEncontraPreco', () => {
   test('deve retornar ModeloPreco em caso de sucesso', async () => {
     const { sut } = criaSut();
 
-    const resposta = await sut.encontra(mockModeloEstado);
+    const resposta = await sut.encontraPreco(mockModeloEstado);
 
-    expect(resposta).toBe(mockModeloPreco);
+    expect(resposta).toEqual(mockModeloPreco);
   });
 });
