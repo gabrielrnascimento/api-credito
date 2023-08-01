@@ -1,5 +1,7 @@
-import { DbCriaCotacaoRepositorioStub, mockEntradaCriaCotacaoDTO } from '../../test/mock-cotacao';
+import { DbCriaCotacaoRepositorioStub, mockEntradaCriaCotacaoDTO, mockEntradaDbCriaCotacaoRepositorioDTO } from '../../test';
 import { DbCriaCotacao } from './db-cria-cotacao';
+
+jest.useFakeTimers({ now: new Date('2023-07-26') });
 
 type SutTypes = {
   sut: DbCriaCotacao
@@ -22,7 +24,7 @@ describe('DbCriaCotacao', () => {
     const criaSpy = jest.spyOn(dbCriaCotacaoRepositorioStub, 'cria');
     await sut.cria(mockEntradaCriaCotacaoDTO);
 
-    expect(criaSpy).toHaveBeenCalledWith(mockEntradaCriaCotacaoDTO);
+    expect(criaSpy).toHaveBeenCalledWith(mockEntradaDbCriaCotacaoRepositorioDTO(new Date()));
   });
 
   test('deve lançar error caso DbCriaCotacaoRepositorio lance erro', async () => {

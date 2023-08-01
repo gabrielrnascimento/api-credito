@@ -6,4 +6,8 @@ export type EntradaCriaCotacaoDTO = {
   dataPagamento: Date
 };
 
-export type EntradaDbCriaCotacaoRepositorioDTO = EntradaCriaCotacaoDTO;
+export type EntradaDbCriaCotacaoRepositorioDTO = Pick<EntradaCriaCotacaoDTO, 'nome' | 'valor' | 'quantidade'> & {
+  estado: string
+  dataCriacao: Date
+  dataVencimento: Date
+};

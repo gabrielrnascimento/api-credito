@@ -1,6 +1,6 @@
 import { type ModeloCotacao } from '../../../domain/models';
 import { type CriaCotacao } from '../../../domain/usecases';
-import { type EntradaCriaCotacaoDTO } from '../../dtos';
+import { type EntradaDbCriaCotacaoRepositorioDTO, type EntradaCriaCotacaoDTO } from '../../dtos';
 import { type DbCriaCotacaoRepositorio } from '../../interfaces';
 
 export class DbCriaCotacao implements CriaCotacao {
@@ -9,7 +9,15 @@ export class DbCriaCotacao implements CriaCotacao {
   }
 
   async cria (dados: EntradaCriaCotacaoDTO): Promise<ModeloCotacao> {
-    await this.dbCriaCotacaoRepositorio.cria(dados);
+    const repositorioDTO: EntradaDbCriaCotacaoRepositorioDTO = {
+      nome: dados.nome,
+      estado: dados.uf,
+      quantidade: dados.quantidade,
+      valor: dados.valor,
+      dataVencimento: dados.dataPagamento,
+      dataCriacao: new Date()
+    };
+    await this.dbCriaCotacaoRepositorio.cria(repositorioDTO);
     return null;
   }
 }
