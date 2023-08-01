@@ -5,6 +5,15 @@ import { MongoUtil } from '../util/mongo-util';
 import { seedEstados } from '../util/seeds';
 import { EstadoRepositorio } from './estado-repositorio';
 
+type SutTypes = {
+  sut: EstadoRepositorio
+};
+
+const criaSut = (db: MongoUtil): SutTypes => {
+  const sut = new EstadoRepositorio(db);
+  return { sut };
+};
+
 describe('EstadoRepositorio', () => {
   let db: MongoUtil;
 
@@ -23,7 +32,8 @@ describe('EstadoRepositorio', () => {
   });
 
   test('deve retornar ModeloEstadoPreco em caso de sucesso', async () => {
-    const sut = new EstadoRepositorio(db);
+    const { sut } = criaSut(db);
+
     const mockEntradaEncontraPrecoDTO: EntradaEncontraPrecoDTO = {
       uf: mockModeloEstado.uf
     };
