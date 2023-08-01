@@ -1,7 +1,6 @@
 import { ErroInesperado } from '../../../domain/errors';
-import { ClienteHttpSpy } from '../../test';
-import { mockEntradaEncontraEstadoDTO, mockModeloEstado } from '../../test/mock-estado';
-import { CodigoStatusHttp } from '../../types/http';
+import { ClienteHttpSpy, mockEntradaEncontraEstadoDTO, mockModeloEstado } from '../../test';
+import { CodigoStatusHttp } from '../../types';
 import { RemotoEncontraEstado } from './remoto-encontra-estado';
 
 type SutTypes = {
