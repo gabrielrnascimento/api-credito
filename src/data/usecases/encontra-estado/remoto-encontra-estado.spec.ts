@@ -23,7 +23,7 @@ describe('RemotoEncontraEstado', () => {
     const url = 'outra_url';
     const { sut, clienteHttpSpy } = criaSut(url);
 
-    await sut.encontra(mockEntradaEncontraEstadoDTO);
+    await sut.encontraEstado(mockEntradaEncontraEstadoDTO);
 
     expect(clienteHttpSpy.url).toBe(`${url}/${mockEntradaEncontraEstadoDTO.cep}/json`);
     expect(clienteHttpSpy.method).toBe('get');
@@ -35,7 +35,7 @@ describe('RemotoEncontraEstado', () => {
       codigoStatus: CodigoStatusHttp.erroServidor
     };
 
-    const promessa = sut.encontra(mockEntradaEncontraEstadoDTO);
+    const promessa = sut.encontraEstado(mockEntradaEncontraEstadoDTO);
 
     await expect(promessa).rejects.toThrow(new ErroInesperado());
   });
@@ -43,7 +43,7 @@ describe('RemotoEncontraEstado', () => {
   test('deve retornar ModeloEstado se ClienteHttp retornar 200', async () => {
     const { sut } = criaSut();
 
-    const resposta = await sut.encontra(mockEntradaEncontraEstadoDTO);
+    const resposta = await sut.encontraEstado(mockEntradaEncontraEstadoDTO);
 
     expect(resposta).toEqual(mockModeloEstado);
   });
