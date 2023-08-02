@@ -1,18 +1,23 @@
 import { type EntradaControladorCriaCotacaoDTO } from '../../data/dtos';
-import { type EncontraEstado } from '../../domain/usecases';
+import { type EncontraPreco, type EncontraEstado } from '../../domain/usecases';
 import { ErroNaoEncontrado, ErroRequisicaoInvalida } from '../errors';
 import { type Controlador, type RequisicaoHttp, type RespostaHttp } from '../interfaces';
 import { erroServidor, naoEncontrado, requisicaoInvalida } from '../utils';
 
 export class CotacaoControlador implements Controlador {
-  constructor (private readonly encontraEstado: EncontraEstado) {
+  constructor (
+    private readonly encontraEstado: EncontraEstado,
+    private readonly encontraPreco: EncontraPreco
+  ) {
     this.encontraEstado = encontraEstado;
+    this.encontraPreco = encontraPreco;
   }
 
   async trate (requisicao: RequisicaoHttp<EntradaControladorCriaCotacaoDTO>): Promise<RespostaHttp> {
     const { cep } = requisicao.body;
     try {
-      await this.encontraEstado.encontraEstado({ cep });
+      const { uf } = await this.encontraEstado.encontraEstado({ cep });
+      await this.encontraPreco.encontraPreco({ uf });
     } catch (erro) {
       switch (true) {
         case erro instanceof ErroRequisicaoInvalida: return requisicaoInvalida(erro);
