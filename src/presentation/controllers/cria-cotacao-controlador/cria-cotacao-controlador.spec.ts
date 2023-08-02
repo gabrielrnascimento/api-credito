@@ -90,6 +90,16 @@ describe('CriaCotacaoControlador', () => {
     expect(validaSpy).toHaveBeenCalledWith(mockRequisicaoHttp);
   });
 
+  test('deve retornar 400 caso Validador retorne erro', async () => {
+    const { sut, validadorStub } = criaSut();
+    const erro = new Error();
+    jest.spyOn(validadorStub, 'valida').mockReturnValue(erro);
+
+    const resposta = await sut.trate(mockRequisicaoHttpCriaCotacao);
+
+    expect(resposta).toEqual(requisicaoInvalida(erro));
+  });
+
   test('deve chamar EncontraEstado com os valores corretos', async () => {
     const { sut, encontraEstadoStub } = criaSut();
     const encontraEstadoSpy = jest.spyOn(encontraEstadoStub, 'encontraEstado');
