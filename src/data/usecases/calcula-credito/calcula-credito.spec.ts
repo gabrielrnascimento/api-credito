@@ -21,4 +21,12 @@ describe('LocalCalculaCredito', () => {
 
     expect(resultado).toEqual(mockCalculoCredito);
   });
+
+  test('deve aproximar o valor para 2 casas decimais', () => {
+    const { sut } = criaSut();
+
+    const resultado = ((sut as any).limitaDuasCasasDecimais(100.41631));
+
+    expect(resultado).toBe(100.42);
+  });
 });
