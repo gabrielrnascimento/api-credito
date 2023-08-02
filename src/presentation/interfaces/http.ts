@@ -11,6 +11,7 @@ export type RequisicaoHttp<B = any> = {
 export enum CodigoStatusHttp {
   ok = 200,
   requisicaoInvalida = 400,
+  naoEncontrado = 404,
   erroServidor = 500
 }
 

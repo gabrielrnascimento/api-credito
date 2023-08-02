@@ -1,7 +1,8 @@
 import { type EntradaControladorCriaCotacaoDTO } from '../../data/dtos';
 import { type EncontraEstado } from '../../domain/usecases';
+import { ErroNaoEncontrado, ErroRequisicaoInvalida } from '../errors';
 import { type Controlador, type RequisicaoHttp, type RespostaHttp } from '../interfaces';
-import { requisicaoInvalida } from '../utils';
+import { naoEncontrado, requisicaoInvalida } from '../utils';
 
 export class CotacaoControlador implements Controlador {
   constructor (private readonly encontraEstado: EncontraEstado) {
@@ -13,7 +14,10 @@ export class CotacaoControlador implements Controlador {
     try {
       await this.encontraEstado.encontraEstado({ cep });
     } catch (erro) {
-      return requisicaoInvalida(erro);
+      switch (true) {
+        case erro instanceof ErroRequisicaoInvalida: return requisicaoInvalida(erro);
+        case erro instanceof ErroNaoEncontrado: return naoEncontrado(erro);
+      }
     }
     return null;
   }
