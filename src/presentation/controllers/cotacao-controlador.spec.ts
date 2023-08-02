@@ -1,7 +1,7 @@
-import { mockEntradaEncontraPrecoDTO } from '../../data/test';
+import { mockEntradaCalculaCreditoDTO, mockEntradaEncontraPrecoDTO } from '../../data/test';
 import { ErroEstadoNaoEncontrado, ErroInesperado } from '../../domain/errors';
 import { ErroNaoEncontrado, ErroRequisicaoInvalida } from '../errors';
-import { EncontraEstadoStub, EncontraPrecoStub, mockRequisicaoHttpCriaCotacao } from '../test';
+import { CalculaCreditoStub, EncontraEstadoStub, EncontraPrecoStub, mockRequisicaoHttpCriaCotacao } from '../test';
 import { erroServidor, naoEncontrado, requisicaoInvalida } from '../utils';
 import { CotacaoControlador } from './cotacao-controlador';
 
@@ -9,16 +9,19 @@ type SutTypes = {
   sut: CotacaoControlador
   encontraEstadoStub: EncontraEstadoStub
   encontraPrecoStub: EncontraPrecoStub
+  calculaCreditoStub: CalculaCreditoStub
 };
 
 const criaSut = (): SutTypes => {
   const encontraEstadoStub = new EncontraEstadoStub();
   const encontraPrecoStub = new EncontraPrecoStub();
-  const sut = new CotacaoControlador(encontraEstadoStub, encontraPrecoStub);
+  const calculaCreditoStub = new CalculaCreditoStub();
+  const sut = new CotacaoControlador(encontraEstadoStub, encontraPrecoStub, calculaCreditoStub);
   return {
     sut,
     encontraEstadoStub,
-    encontraPrecoStub
+    encontraPrecoStub,
+    calculaCreditoStub
   };
 };
 
@@ -83,5 +86,14 @@ describe('CotacaoControlador', () => {
     const resposta = await sut.trate(mockRequisicaoHttpCriaCotacao);
 
     expect(resposta).toEqual(naoEncontrado(erro));
+  });
+
+  test('deve chamar CalculaCredito com os valores corretos', async () => {
+    const { sut, calculaCreditoStub } = criaSut();
+    const calculaSpy = jest.spyOn(calculaCreditoStub, 'calcula');
+
+    await sut.trate(mockRequisicaoHttpCriaCotacao);
+
+    expect(calculaSpy).toHaveBeenCalledWith(mockEntradaCalculaCreditoDTO);
   });
 });

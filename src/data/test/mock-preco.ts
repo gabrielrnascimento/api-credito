@@ -5,7 +5,7 @@ import { type ModeloEstadoPreco } from '../types';
 import { mockModeloEstado } from './mock-estado';
 
 export const mockModeloPreco: ModeloPreco = {
-  preco: 1040.20
+  preco: 1050
 };
 
 export const mockEntradaEncontraPrecoDTO: EntradaEncontraPrecoDTO = {
