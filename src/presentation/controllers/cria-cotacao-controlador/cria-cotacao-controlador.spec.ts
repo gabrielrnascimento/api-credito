@@ -1,4 +1,4 @@
-import { type SaidaControladorCriaCotacaoDTO } from '../../../data/dtos';
+import { type SaidaCriaCotacaoControladorDTO } from '../../../data/dtos';
 import { mockEntradaEncontraPrecoDTO, mockEntradaCalculaCreditoDTO, mockEntradaCriaCotacaoDTO } from '../../../data/test';
 import { ErroInesperado, ErroEstadoNaoEncontrado } from '../../../domain/errors';
 import { ErroRequisicaoInvalida, ErroNaoEncontrado } from '../../errors';
@@ -15,7 +15,7 @@ const mockRequisicaoHttp: any = {
   }
 };
 
-const mockSaidaCriaCotacao: SaidaControladorCriaCotacaoDTO = {
+const mockSaidaCriaCotacao: SaidaCriaCotacaoControladorDTO = {
   id: 'qualquer_id',
   nome: 'qualquer nome',
   estado: 'SP',

@@ -1,4 +1,4 @@
-import { type SaidaControladorCriaCotacaoDTO, type EntradaControladorCriaCotacaoDTO } from '../../../data/dtos';
+import { type EntradaCriaCotacaoControladorDTO, type SaidaCriaCotacaoControladorDTO } from '../../../data/dtos';
 import { ErroEstadoNaoEncontrado } from '../../../domain/errors';
 import { type EncontraPreco, type EncontraEstado, type CalculaCredito, type CriaCotacao } from '../../../domain/usecases';
 import { ErroNaoEncontrado, ErroRequisicaoInvalida } from '../../errors';
@@ -16,8 +16,8 @@ export class CriaCotacaoControlador implements Controlador {
     this.encontraPreco = encontraPreco;
   }
 
-  private formataRequisicao (requisicao: RequisicaoHttp<EntradaControladorCriaCotacaoDTO>): EntradaControladorCriaCotacaoDTO {
-    const { nome, cep, quantidade, dataPagamento }: EntradaControladorCriaCotacaoDTO = {
+  private formataRequisicao (requisicao: RequisicaoHttp<EntradaCriaCotacaoControladorDTO>): EntradaCriaCotacaoControladorDTO {
+    const { nome, cep, quantidade, dataPagamento }: EntradaCriaCotacaoControladorDTO = {
       nome: requisicao.body.nome,
       cep: requisicao.body.cep,
       quantidade: requisicao.body.quantidade,
@@ -31,9 +31,9 @@ export class CriaCotacaoControlador implements Controlador {
     };
   }
 
-  async trate (requisicao: RequisicaoHttp<EntradaControladorCriaCotacaoDTO>): Promise<RespostaHttp> {
+  async trate (requisicao: RequisicaoHttp<EntradaCriaCotacaoControladorDTO>): Promise<RespostaHttp> {
     const { nome, cep, quantidade, dataPagamento } = this.formataRequisicao(requisicao);
-    let saida: SaidaControladorCriaCotacaoDTO;
+    let saida: SaidaCriaCotacaoControladorDTO;
     try {
       const { uf } = await this.encontraEstado.encontraEstado({ cep });
       const { preco } = await this.encontraPreco.encontraPreco({ uf });

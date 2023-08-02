@@ -12,14 +12,14 @@ export type EntradaDbCriaCotacaoRepositorioDTO = Pick<EntradaCriaCotacaoDTO, 'no
   dataVencimento: Date
 };
 
-export type EntradaControladorCriaCotacaoDTO = {
+export type EntradaCriaCotacaoControladorDTO = {
   nome: string
   cep: string
   quantidade: number
   dataPagamento: Date
 };
 
-export type SaidaControladorCriaCotacaoDTO = {
+export type SaidaCriaCotacaoControladorDTO = {
   id: string
   nome: string
   estado: string
