@@ -1,6 +1,7 @@
 import { type EntradaCriaCotacaoControladorDTO, type SaidaCriaCotacaoControladorDTO } from '../../../data/dtos';
 import { ErroEstadoNaoEncontrado } from '../../../domain/errors';
 import { type EncontraPreco, type EncontraEstado, type CalculaCredito, type CriaCotacao } from '../../../domain/usecases';
+import { type Validador } from '../../../utils/interface';
 import { ErroNaoEncontrado, ErroRequisicaoInvalida } from '../../errors';
 import { type Controlador, type RequisicaoHttp, type RespostaHttp } from '../../interfaces';
 import { criado, erroServidor, naoEncontrado, requisicaoInvalida } from '../../utils';
@@ -10,10 +11,14 @@ export class CriaCotacaoControlador implements Controlador {
     private readonly encontraEstado: EncontraEstado,
     private readonly encontraPreco: EncontraPreco,
     private readonly calculaCredito: CalculaCredito,
-    private readonly criaCotacao: CriaCotacao
+    private readonly criaCotacao: CriaCotacao,
+    private readonly validador: Validador
   ) {
     this.encontraEstado = encontraEstado;
     this.encontraPreco = encontraPreco;
+    this.calculaCredito = calculaCredito;
+    this.criaCotacao = criaCotacao;
+    this.validador = validador;
   }
 
   private formataRequisicao (requisicao: RequisicaoHttp<EntradaCriaCotacaoControladorDTO>): EntradaCriaCotacaoControladorDTO {
@@ -32,6 +37,7 @@ export class CriaCotacaoControlador implements Controlador {
   }
 
   async trate (requisicao: RequisicaoHttp<EntradaCriaCotacaoControladorDTO>): Promise<RespostaHttp> {
+    this.validador.valida(requisicao);
     const { nome, cep, quantidade, dataPagamento } = this.formataRequisicao(requisicao);
     let saida: SaidaCriaCotacaoControladorDTO;
     try {
