@@ -1,10 +1,10 @@
 export type MetodoHttp = 'post' | 'get';
 
-export type RequisicaoHttp = {
-  method: MetodoHttp
-  url: string
+export type RequisicaoHttp<B = any> = {
+  method?: MetodoHttp
+  url?: string
   headers?: any
-  body?: any
+  body?: B
   data?: any
 };
 

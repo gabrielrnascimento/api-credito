@@ -1,9 +1,9 @@
 import { ErroInesperado } from '../../../domain/errors';
 import { type ModeloEstado } from '../../../domain/models';
 import { type EncontraEstado } from '../../../domain/usecases';
+import { type RequisicaoHttp, CodigoStatusHttp } from '../../../presentation/interfaces';
 import { type EntradaEncontraEstadoDTO } from '../../dtos';
 import { type ClienteHttp } from '../../interfaces/cliente-http';
-import { CodigoStatusHttp, type RequisicaoHttp } from '../../types';
 
 export class RemotoEncontraEstado implements EncontraEstado {
   constructor (

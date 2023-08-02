@@ -1,5 +1,5 @@
+import { type MetodoHttp, type RespostaHttp, CodigoStatusHttp, type RequisicaoHttp } from '../../presentation/interfaces';
 import { type ClienteHttp } from '../interfaces';
-import { type MetodoHttp, type RespostaHttp, CodigoStatusHttp, type RequisicaoHttp } from '../types';
 
 export class ClienteHttpSpy<R = any> implements ClienteHttp<R> {
   public method?: MetodoHttp;
