@@ -2,7 +2,7 @@ import { type EntradaControladorCriaCotacaoDTO } from '../../data/dtos';
 import { type EncontraEstado } from '../../domain/usecases';
 import { ErroNaoEncontrado, ErroRequisicaoInvalida } from '../errors';
 import { type Controlador, type RequisicaoHttp, type RespostaHttp } from '../interfaces';
-import { naoEncontrado, requisicaoInvalida } from '../utils';
+import { erroServidor, naoEncontrado, requisicaoInvalida } from '../utils';
 
 export class CotacaoControlador implements Controlador {
   constructor (private readonly encontraEstado: EncontraEstado) {
@@ -17,6 +17,7 @@ export class CotacaoControlador implements Controlador {
       switch (true) {
         case erro instanceof ErroRequisicaoInvalida: return requisicaoInvalida(erro);
         case erro instanceof ErroNaoEncontrado: return naoEncontrado(erro);
+        default: return erroServidor(erro);
       }
     }
     return null;
