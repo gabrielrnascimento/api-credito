@@ -1,9 +1,10 @@
 import { type EntradaControladorCriaCotacaoDTO } from '../../data/dtos';
 import { ErroEstadoNaoEncontrado } from '../../domain/errors';
+import { type ModeloCotacao } from '../../domain/models';
 import { type EncontraPreco, type EncontraEstado, type CalculaCredito, type CriaCotacao } from '../../domain/usecases';
 import { ErroNaoEncontrado, ErroRequisicaoInvalida } from '../errors';
 import { type Controlador, type RequisicaoHttp, type RespostaHttp } from '../interfaces';
-import { erroServidor, naoEncontrado, requisicaoInvalida } from '../utils';
+import { criado, erroServidor, naoEncontrado, requisicaoInvalida } from '../utils';
 
 export class CotacaoControlador implements Controlador {
   constructor (
@@ -18,6 +19,7 @@ export class CotacaoControlador implements Controlador {
 
   async trate (requisicao: RequisicaoHttp<EntradaControladorCriaCotacaoDTO>): Promise<RespostaHttp> {
     const { nome, cep, dataPagamento, quantidade } = requisicao.body;
+    let cotacao: ModeloCotacao;
     try {
       const { uf } = await this.encontraEstado.encontraEstado({ cep });
       const { preco } = await this.encontraPreco.encontraPreco({ uf });
@@ -26,7 +28,7 @@ export class CotacaoControlador implements Controlador {
         quantidade,
         dataPagamento
       });
-      await this.criaCotacao.cria({
+      cotacao = await this.criaCotacao.cria({
         nome,
         uf,
         quantidade,
@@ -41,6 +43,6 @@ export class CotacaoControlador implements Controlador {
         default: return erroServidor(erro);
       }
     }
-    return null;
+    return criado(cotacao);
   }
 }

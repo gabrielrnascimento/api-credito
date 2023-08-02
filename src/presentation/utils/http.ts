@@ -1,6 +1,11 @@
 import { ErroServidor } from '../errors';
 import { type RespostaHttp } from '../interfaces';
 
+export const criado = (dados: any = undefined): RespostaHttp => ({
+  codigoStatus: 201,
+  body: dados
+});
+
 export const requisicaoInvalida = (erro: Error): RespostaHttp => ({
   codigoStatus: 400,
   body: erro
