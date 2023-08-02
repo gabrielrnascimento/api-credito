@@ -5,6 +5,15 @@ import { EncontraEstadoStub, EncontraPrecoStub, CalculaCreditoStub, CriaCotacaoS
 import { requisicaoInvalida, naoEncontrado, erroServidor, criado } from '../../utils';
 import { CriaCotacaoControlador } from './cria-cotacao-controlador';
 
+const mockRequisicaoHttp: any = {
+  body: {
+    nome: 'qualquer nome',
+    cep: '12401-410',
+    quantidade: 10,
+    dataPagamento: '2023-10-02'
+  }
+};
+
 type SutTypes = {
   sut: CriaCotacaoControlador
   encontraEstadoStub: EncontraEstadoStub
@@ -29,6 +38,30 @@ const criaSut = (): SutTypes => {
 };
 
 describe('CriaCotacaoControlador', () => {
+  test('deve chamar formataRequisicao com os valores corretos', async () => {
+    const { sut } = criaSut();
+    const formatSpy = jest.spyOn((sut as any), 'formataRequisicao');
+
+    await sut.trate(mockRequisicaoHttp);
+
+    expect(formatSpy).toHaveBeenCalledWith(mockRequisicaoHttp);
+  });
+
+  test('deve formatar os campos recebidos corretamente', async () => {
+    const { sut } = criaSut();
+
+    const requisicaoFormatada = (sut as any).formataRequisicao(mockRequisicaoHttp);
+
+    const { nome, cep, quantidade, dataPagamento } = mockRequisicaoHttp.body;
+
+    expect(requisicaoFormatada).toEqual({
+      nome,
+      cep,
+      quantidade,
+      dataPagamento: new Date(dataPagamento)
+    });
+  });
+
   test('deve chamar EncontraEstado com os valores corretos', async () => {
     const { sut, encontraEstadoStub } = criaSut();
     const encontraEstadoSpy = jest.spyOn(encontraEstadoStub, 'encontraEstado');
