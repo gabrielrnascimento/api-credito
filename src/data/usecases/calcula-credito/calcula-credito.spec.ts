@@ -1,4 +1,4 @@
-import { mockCalculoCredito, mockEntradaCalculaCreditoDTO } from '../../test/mock-calculo';
+import { mockCalculoCredito, mockEntradaCalculaCreditoDTO } from '../../test';
 import { LocalCalculaCredito } from './calcula-credito';
 
 jest.useFakeTimers({ now: new Date('2023-07-26') });
