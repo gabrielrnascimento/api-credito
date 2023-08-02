@@ -1,6 +1,7 @@
+import { ErroInesperado } from '../../domain/errors';
 import { ErroNaoEncontrado, ErroRequisicaoInvalida } from '../errors';
 import { EncontraEstadoStub, mockRequisicaoHttpCriaCotacao } from '../test';
-import { naoEncontrado, requisicaoInvalida } from '../utils';
+import { erroServidor, naoEncontrado, requisicaoInvalida } from '../utils';
 import { CotacaoControlador } from './cotacao-controlador';
 
 type SutTypes = {
@@ -47,5 +48,15 @@ describe('CotacaoControlador', () => {
     const resposta = await sut.trate(mockRequisicaoHttpCriaCotacao);
 
     expect(resposta).toEqual(naoEncontrado(erro));
+  });
+
+  test('deve retornar 500 caso EncontraEstado lance ErroInesperado', async () => {
+    const { sut, encontraEstadoStub } = criaSut();
+    const erro = new ErroInesperado();
+    jest.spyOn(encontraEstadoStub, 'encontraEstado').mockRejectedValueOnce(erro);
+
+    const resposta = await sut.trate(mockRequisicaoHttpCriaCotacao);
+
+    expect(resposta).toEqual(erroServidor(erro));
   });
 });
