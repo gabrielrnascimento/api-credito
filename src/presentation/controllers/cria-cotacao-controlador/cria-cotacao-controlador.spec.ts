@@ -2,7 +2,7 @@ import { type SaidaCriaCotacaoControladorDTO } from '../../../data/dtos';
 import { mockEntradaEncontraPrecoDTO, mockEntradaCalculaCreditoDTO, mockEntradaCriaCotacaoDTO } from '../../../data/test';
 import { ErroInesperado, ErroEstadoNaoEncontrado } from '../../../domain/errors';
 import { ErroRequisicaoInvalida, ErroNaoEncontrado } from '../../errors';
-import { EncontraEstadoStub, EncontraPrecoStub, CalculaCreditoStub, CriaCotacaoStub, mockRequisicaoHttpCriaCotacao } from '../../test';
+import { EncontraEstadoStub, EncontraPrecoStub, CalculaCreditoStub, CriaCotacaoStub, mockRequisicaoHttpCriaCotacao, ValidadorStub } from '../../test';
 import { requisicaoInvalida, naoEncontrado, erroServidor, criado } from '../../utils';
 import { CriaCotacaoControlador } from './cria-cotacao-controlador';
 
@@ -30,6 +30,7 @@ type SutTypes = {
   encontraPrecoStub: EncontraPrecoStub
   calculaCreditoStub: CalculaCreditoStub
   criaCotacaoStub: CriaCotacaoStub
+  validadorStub: ValidadorStub
 };
 
 const criaSut = (): SutTypes => {
@@ -37,13 +38,21 @@ const criaSut = (): SutTypes => {
   const encontraPrecoStub = new EncontraPrecoStub();
   const calculaCreditoStub = new CalculaCreditoStub();
   const criaCotacaoStub = new CriaCotacaoStub();
-  const sut = new CriaCotacaoControlador(encontraEstadoStub, encontraPrecoStub, calculaCreditoStub, criaCotacaoStub);
+  const validadorStub = new ValidadorStub();
+  const sut = new CriaCotacaoControlador(
+    encontraEstadoStub,
+    encontraPrecoStub,
+    calculaCreditoStub,
+    criaCotacaoStub,
+    validadorStub
+  );
   return {
     sut,
     encontraEstadoStub,
     encontraPrecoStub,
     calculaCreditoStub,
-    criaCotacaoStub
+    criaCotacaoStub,
+    validadorStub
   };
 };
 
@@ -70,6 +79,15 @@ describe('CriaCotacaoControlador', () => {
       quantidade,
       dataPagamento: new Date(dataPagamento)
     });
+  });
+
+  test('deve chamar Validador com os valores corretos', async () => {
+    const { sut, validadorStub } = criaSut();
+    const validaSpy = jest.spyOn(validadorStub, 'valida');
+
+    await sut.trate(mockRequisicaoHttp);
+
+    expect(validaSpy).toHaveBeenCalledWith(mockRequisicaoHttp);
   });
 
   test('deve chamar EncontraEstado com os valores corretos', async () => {
