@@ -1,4 +1,5 @@
 import { ErroInesperado } from '../../../domain/errors';
+import { ErroRequisicaoInvalida } from '../../../presentation/errors';
 import { CodigoStatusHttp } from '../../../presentation/interfaces';
 import { ClienteHttpSpy, mockEntradaEncontraEstadoDTO, mockModeloEstado } from '../../test';
 import { RemotoEncontraEstado } from './remoto-encontra-estado';
@@ -38,6 +39,17 @@ describe('RemotoEncontraEstado', () => {
     const promessa = sut.encontraEstado(mockEntradaEncontraEstadoDTO);
 
     await expect(promessa).rejects.toThrow(new ErroInesperado());
+  });
+
+  test('deve lançar ErroRequisicaoInvalida se ClienteHttp retornar 400', async () => {
+    const { sut, clienteHttpSpy } = criaSut();
+    clienteHttpSpy.resposta = {
+      codigoStatus: CodigoStatusHttp.requisicaoInvalida
+    };
+
+    const promessa = sut.encontraEstado(mockEntradaEncontraEstadoDTO);
+
+    await expect(promessa).rejects.toThrow(new ErroRequisicaoInvalida());
   });
 
   test('deve retornar ModeloEstado se ClienteHttp retornar 200', async () => {
