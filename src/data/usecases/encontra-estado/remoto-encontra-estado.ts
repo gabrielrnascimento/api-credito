@@ -14,7 +14,7 @@ export class RemotoEncontraEstado implements EncontraEstado {
     this.clienteHttp = clienteHttp;
   }
 
-  async encontra (dados: EntradaEncontraEstadoDTO): Promise<ModeloEstado> {
+  async encontraEstado (dados: EntradaEncontraEstadoDTO): Promise<ModeloEstado> {
     const requisicao: RequisicaoHttp = {
       method: 'get',
       url: `${this.url}/${dados.cep}/json`
