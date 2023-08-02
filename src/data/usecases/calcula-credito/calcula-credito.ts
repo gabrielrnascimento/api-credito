@@ -19,10 +19,14 @@ export class LocalCalculaCredito implements CalculaCredito {
     return (anos * 12) + (mesFinal - mesInicial);
   }
 
+  private limitaDuasCasasDecimais (valor: number): number {
+    return Math.round((valor + Number.EPSILON) * 100) / 100;
+  }
+
   calcula (dados: EntradaCalculaCreditoDTO): number {
     const meses = this.diferencaEmMeses(dados.dataPagamento);
     const valorTotal = dados.valorUnitario * dados.quantidade;
     const valorTotalComJuros = valorTotal * Math.pow(1 + this.taxaJurosMensal, meses);
-    return valorTotalComJuros;
+    return this.limitaDuasCasasDecimais(valorTotalComJuros);
   }
 }
