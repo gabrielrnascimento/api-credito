@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "dev": "ts-node-dev --respawn src/index.ts",
+    "dev": "ts-node-dev --respawn src/main/server.ts",
     "start": "node dist/index.js",
     "build": "rm -rf dist/ && tsc",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
