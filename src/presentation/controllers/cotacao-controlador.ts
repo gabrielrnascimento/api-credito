@@ -1,4 +1,5 @@
 import { type EntradaControladorCriaCotacaoDTO } from '../../data/dtos';
+import { ErroEstadoNaoEncontrado } from '../../domain/errors';
 import { type EncontraPreco, type EncontraEstado } from '../../domain/usecases';
 import { ErroNaoEncontrado, ErroRequisicaoInvalida } from '../errors';
 import { type Controlador, type RequisicaoHttp, type RespostaHttp } from '../interfaces';
@@ -22,6 +23,7 @@ export class CotacaoControlador implements Controlador {
       switch (true) {
         case erro instanceof ErroRequisicaoInvalida: return requisicaoInvalida(erro);
         case erro instanceof ErroNaoEncontrado: return naoEncontrado(erro);
+        case erro instanceof ErroEstadoNaoEncontrado: return naoEncontrado(erro);
         default: return erroServidor(erro);
       }
     }
