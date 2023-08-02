@@ -1,6 +1,7 @@
 import { ErroInesperado } from '../../../domain/errors';
 import { type ModeloEstado } from '../../../domain/models';
 import { type EncontraEstado } from '../../../domain/usecases';
+import { ErroRequisicaoInvalida } from '../../../presentation/errors';
 import { type RequisicaoHttp, CodigoStatusHttp } from '../../../presentation/interfaces';
 import { type EntradaEncontraEstadoDTO } from '../../dtos';
 import { type ClienteHttp } from '../../interfaces/cliente-http';
@@ -24,6 +25,7 @@ export class RemotoEncontraEstado implements EncontraEstado {
 
     switch (resposta.codigoStatus) {
       case CodigoStatusHttp.ok: return { uf: resposta.body.uf };
+      case CodigoStatusHttp.requisicaoInvalida: throw new ErroRequisicaoInvalida();
       default: throw new ErroInesperado();
     }
   }
