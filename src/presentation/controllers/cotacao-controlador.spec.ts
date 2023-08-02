@@ -1,4 +1,6 @@
+import { ErroRequisicaoInvalida } from '../errors';
 import { EncontraEstadoStub, mockRequisicaoHttpCriaCotacao } from '../test';
+import { requisicaoInvalida } from '../utils';
 import { CotacaoControlador } from './cotacao-controlador';
 
 type SutTypes = {
@@ -25,5 +27,15 @@ describe('CotacaoControlador', () => {
     expect(encontraEstadoSpy).toHaveBeenCalledWith({
       cep: mockRequisicaoHttpCriaCotacao.body.cep
     });
+  });
+
+  test('deve retornar 400 caso EncontraEstado lance ErroRequisicaoInvalida', async () => {
+    const { sut, encontraEstadoStub } = criaSut();
+    const erro = new ErroRequisicaoInvalida();
+    jest.spyOn(encontraEstadoStub, 'encontraEstado').mockRejectedValueOnce(erro);
+
+    const resposta = await sut.trate(mockRequisicaoHttpCriaCotacao);
+
+    expect(resposta).toEqual(requisicaoInvalida(erro));
   });
 });
