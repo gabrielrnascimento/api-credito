@@ -1,4 +1,4 @@
-import { DbCriaCotacaoRepositorioStub, mockEntradaCriaCotacaoDTO, mockEntradaDbCriaCotacaoRepositorioDTO } from '../../test';
+import { DbCriaCotacaoRepositorioStub, mockEntradaCriaCotacaoDTO, mockEntradaDbCriaCotacaoRepositorioDTO, mockModeloCotacao } from '../../test';
 import { DbCriaCotacao } from './db-cria-cotacao';
 
 jest.useFakeTimers({ now: new Date('2023-07-26') });
@@ -33,5 +33,13 @@ describe('DbCriaCotacao', () => {
     const promessa = sut.cria(mockEntradaCriaCotacaoDTO);
 
     await expect(promessa).rejects.toThrow(new Error());
+  });
+
+  test('deve retornar ModeloCotacao em caso de sucesso', async () => {
+    const { sut } = criaSut();
+
+    const resposta = await sut.cria(mockEntradaCriaCotacaoDTO);
+
+    expect(resposta).toBe(mockModeloCotacao);
   });
 });
