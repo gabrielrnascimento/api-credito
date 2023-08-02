@@ -1,12 +1,12 @@
-import { mockEntradaCalculaCreditoDTO, mockEntradaCriaCotacaoDTO, mockEntradaEncontraPrecoDTO, mockModeloCotacao } from '../../data/test';
-import { ErroEstadoNaoEncontrado, ErroInesperado } from '../../domain/errors';
-import { ErroNaoEncontrado, ErroRequisicaoInvalida } from '../errors';
-import { CalculaCreditoStub, CriaCotacaoStub, EncontraEstadoStub, EncontraPrecoStub, mockRequisicaoHttpCriaCotacao } from '../test';
-import { criado, erroServidor, naoEncontrado, requisicaoInvalida } from '../utils';
-import { CotacaoControlador } from './cotacao-controlador';
+import { mockEntradaEncontraPrecoDTO, mockEntradaCalculaCreditoDTO, mockEntradaCriaCotacaoDTO, mockModeloCotacao } from '../../../data/test';
+import { ErroInesperado, ErroEstadoNaoEncontrado } from '../../../domain/errors';
+import { ErroRequisicaoInvalida, ErroNaoEncontrado } from '../../errors';
+import { EncontraEstadoStub, EncontraPrecoStub, CalculaCreditoStub, CriaCotacaoStub, mockRequisicaoHttpCriaCotacao } from '../../test';
+import { requisicaoInvalida, naoEncontrado, erroServidor, criado } from '../../utils';
+import { CriaCotacaoControlador } from './cria-cotacao-controlador';
 
 type SutTypes = {
-  sut: CotacaoControlador
+  sut: CriaCotacaoControlador
   encontraEstadoStub: EncontraEstadoStub
   encontraPrecoStub: EncontraPrecoStub
   calculaCreditoStub: CalculaCreditoStub
@@ -18,7 +18,7 @@ const criaSut = (): SutTypes => {
   const encontraPrecoStub = new EncontraPrecoStub();
   const calculaCreditoStub = new CalculaCreditoStub();
   const criaCotacaoStub = new CriaCotacaoStub();
-  const sut = new CotacaoControlador(encontraEstadoStub, encontraPrecoStub, calculaCreditoStub, criaCotacaoStub);
+  const sut = new CriaCotacaoControlador(encontraEstadoStub, encontraPrecoStub, calculaCreditoStub, criaCotacaoStub);
   return {
     sut,
     encontraEstadoStub,
@@ -28,7 +28,7 @@ const criaSut = (): SutTypes => {
   };
 };
 
-describe('CotacaoControlador', () => {
+describe('CriaCotacaoControlador', () => {
   test('deve chamar EncontraEstado com os valores corretos', async () => {
     const { sut, encontraEstadoStub } = criaSut();
     const encontraEstadoSpy = jest.spyOn(encontraEstadoStub, 'encontraEstado');
