@@ -1,18 +1,9 @@
-import { type EntradaEncontraPrecoDTO } from '../../data/dtos';
-import { mockEntradaEncontraPrecoDTO, mockModeloPreco } from '../../data/test';
-import { ErroInesperado } from '../../domain/errors';
-import { type ModeloPreco } from '../../domain/models';
-import { type EncontraPreco } from '../../domain/usecases';
+import { mockEntradaEncontraPrecoDTO } from '../../data/test';
+import { ErroEstadoNaoEncontrado, ErroInesperado } from '../../domain/errors';
 import { ErroNaoEncontrado, ErroRequisicaoInvalida } from '../errors';
-import { EncontraEstadoStub, mockRequisicaoHttpCriaCotacao } from '../test';
+import { EncontraEstadoStub, EncontraPrecoStub, mockRequisicaoHttpCriaCotacao } from '../test';
 import { erroServidor, naoEncontrado, requisicaoInvalida } from '../utils';
 import { CotacaoControlador } from './cotacao-controlador';
-
-class EncontraPrecoStub implements EncontraPreco {
-  async encontraPreco (dados: EntradaEncontraPrecoDTO): Promise<ModeloPreco> {
-    return mockModeloPreco;
-  }
-}
 
 type SutTypes = {
   sut: CotacaoControlador
@@ -82,5 +73,15 @@ describe('CotacaoControlador', () => {
     expect(encontraPrecoSpy).toHaveBeenCalledWith({
       uf: mockEntradaEncontraPrecoDTO.uf
     });
+  });
+
+  test('deve retornar 404 caso EncontraPreco lance ErroEstadoNaoEncontrado', async () => {
+    const { sut, encontraPrecoStub } = criaSut();
+    const erro = new ErroEstadoNaoEncontrado();
+    jest.spyOn(encontraPrecoStub, 'encontraPreco').mockRejectedValueOnce(erro);
+
+    const resposta = await sut.trate(mockRequisicaoHttpCriaCotacao);
+
+    expect(resposta).toEqual(naoEncontrado(erro));
   });
 });
