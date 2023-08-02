@@ -37,7 +37,8 @@ export class CriaCotacaoControlador implements Controlador {
   }
 
   async trate (requisicao: RequisicaoHttp<EntradaCriaCotacaoControladorDTO>): Promise<RespostaHttp> {
-    this.validador.valida(requisicao);
+    const erro = this.validador.valida(requisicao);
+    if (erro) return requisicaoInvalida(erro);
     const { nome, cep, quantidade, dataPagamento } = this.formataRequisicao(requisicao);
     let saida: SaidaCriaCotacaoControladorDTO;
     try {
