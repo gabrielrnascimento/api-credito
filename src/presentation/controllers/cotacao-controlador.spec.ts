@@ -1,8 +1,8 @@
-import { mockEntradaCalculaCreditoDTO, mockEntradaCriaCotacaoDTO, mockEntradaEncontraPrecoDTO } from '../../data/test';
+import { mockEntradaCalculaCreditoDTO, mockEntradaCriaCotacaoDTO, mockEntradaEncontraPrecoDTO, mockModeloCotacao } from '../../data/test';
 import { ErroEstadoNaoEncontrado, ErroInesperado } from '../../domain/errors';
 import { ErroNaoEncontrado, ErroRequisicaoInvalida } from '../errors';
 import { CalculaCreditoStub, CriaCotacaoStub, EncontraEstadoStub, EncontraPrecoStub, mockRequisicaoHttpCriaCotacao } from '../test';
-import { erroServidor, naoEncontrado, requisicaoInvalida } from '../utils';
+import { criado, erroServidor, naoEncontrado, requisicaoInvalida } from '../utils';
 import { CotacaoControlador } from './cotacao-controlador';
 
 type SutTypes = {
@@ -107,5 +107,13 @@ describe('CotacaoControlador', () => {
     await sut.trate(mockRequisicaoHttpCriaCotacao);
 
     expect(criaSpy).toHaveBeenCalledWith(mockEntradaCriaCotacaoDTO);
+  });
+
+  test('deve retornar 201 em caso de sucesso', async () => {
+    const { sut } = criaSut();
+
+    const resposta = await sut.trate(mockRequisicaoHttpCriaCotacao);
+
+    expect(resposta).toEqual(criado(mockModeloCotacao));
   });
 });
