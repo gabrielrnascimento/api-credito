@@ -17,7 +17,6 @@ export class DbCriaCotacao implements CriaCotacao {
       dataVencimento: dados.dataPagamento,
       dataCriacao: new Date()
     };
-    await this.dbCriaCotacaoRepositorio.cria(repositorioDTO);
-    return null;
+    return await this.dbCriaCotacaoRepositorio.cria(repositorioDTO);
   }
 }
