@@ -17,8 +17,23 @@ export class CriaCotacaoControlador implements Controlador {
     this.encontraPreco = encontraPreco;
   }
 
+  private formataRequisicao (requisicao: RequisicaoHttp<EntradaControladorCriaCotacaoDTO>): EntradaControladorCriaCotacaoDTO {
+    const { nome, cep, quantidade, dataPagamento }: EntradaControladorCriaCotacaoDTO = {
+      nome: requisicao.body.nome,
+      cep: requisicao.body.cep,
+      quantidade: requisicao.body.quantidade,
+      dataPagamento: new Date(requisicao.body.dataPagamento)
+    };
+    return {
+      nome,
+      cep,
+      quantidade,
+      dataPagamento
+    };
+  }
+
   async trate (requisicao: RequisicaoHttp<EntradaControladorCriaCotacaoDTO>): Promise<RespostaHttp> {
-    const { nome, cep, dataPagamento, quantidade } = requisicao.body;
+    const { nome, cep, quantidade, dataPagamento } = this.formataRequisicao(requisicao);
     let cotacao: ModeloCotacao;
     try {
       const { uf } = await this.encontraEstado.encontraEstado({ cep });
