@@ -1,6 +1,5 @@
-import { type EntradaControladorCriaCotacaoDTO } from '../../../data/dtos';
+import { type SaidaControladorCriaCotacaoDTO, type EntradaControladorCriaCotacaoDTO } from '../../../data/dtos';
 import { ErroEstadoNaoEncontrado } from '../../../domain/errors';
-import { type ModeloCotacao } from '../../../domain/models';
 import { type EncontraPreco, type EncontraEstado, type CalculaCredito, type CriaCotacao } from '../../../domain/usecases';
 import { ErroNaoEncontrado, ErroRequisicaoInvalida } from '../../errors';
 import { type Controlador, type RequisicaoHttp, type RespostaHttp } from '../../interfaces';
@@ -34,7 +33,7 @@ export class CriaCotacaoControlador implements Controlador {
 
   async trate (requisicao: RequisicaoHttp<EntradaControladorCriaCotacaoDTO>): Promise<RespostaHttp> {
     const { nome, cep, quantidade, dataPagamento } = this.formataRequisicao(requisicao);
-    let cotacao: ModeloCotacao;
+    let saida: SaidaControladorCriaCotacaoDTO;
     try {
       const { uf } = await this.encontraEstado.encontraEstado({ cep });
       const { preco } = await this.encontraPreco.encontraPreco({ uf });
@@ -43,13 +42,21 @@ export class CriaCotacaoControlador implements Controlador {
         quantidade,
         dataPagamento
       });
-      cotacao = await this.criaCotacao.cria({
+      const cotacao = await this.criaCotacao.cria({
         nome,
         uf,
         quantidade,
         dataPagamento,
         valor
       });
+      saida = {
+        id: cotacao.id,
+        nome: cotacao.nome,
+        estado: cotacao.estado,
+        quantidade: cotacao.quantidade,
+        valor: cotacao.valor,
+        dataVencimento: cotacao.dataVencimento.toISOString().split('T')[0]
+      };
     } catch (erro) {
       switch (true) {
         case erro instanceof ErroRequisicaoInvalida: return requisicaoInvalida(erro);
@@ -58,6 +65,6 @@ export class CriaCotacaoControlador implements Controlador {
         default: return erroServidor(erro);
       }
     }
-    return criado(cotacao);
+    return criado(saida);
   }
 }

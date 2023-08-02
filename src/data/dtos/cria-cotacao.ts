@@ -18,3 +18,12 @@ export type EntradaControladorCriaCotacaoDTO = {
   quantidade: number
   dataPagamento: Date
 };
+
+export type SaidaControladorCriaCotacaoDTO = {
+  id: string
+  nome: string
+  estado: string
+  quantidade: number
+  valor: number
+  dataVencimento: string
+};
