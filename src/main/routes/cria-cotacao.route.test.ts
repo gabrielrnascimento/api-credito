@@ -25,7 +25,7 @@ const criaDataPagamento = (): string => {
   return dataPagamento.toISOString().split('T')[0];
 };
 
-describe('CotacaoRoutes', () => {
+describe('CriaCotacao', () => {
   beforeAll(async () => {
     app = setupApp();
     await mongoUtil.conecta(process.env.MONGO_URL);
@@ -40,7 +40,6 @@ describe('CotacaoRoutes', () => {
     cotacoesCollection = await mongoUtil.pegaCollection('cotacoes');
     await cotacoesCollection.deleteMany({});
   });
-
   test('deve retornar 201 com os valores corretos', async () => {
     const resposta = await request(app)
       .post('/api/cotacao')
