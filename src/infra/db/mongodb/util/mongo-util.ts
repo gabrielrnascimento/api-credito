@@ -21,7 +21,7 @@ export class MongoUtil {
 
   async pegaCollection (name: string): Promise<Collection> {
     if (!this.cliente) this.cliente = await MongoClient.connect(this.uri);
-    return this.cliente.db().collection(name);
+    return this.cliente.db(process.env.NOME_DATABASE).collection(name);
   }
 
   async popula (nomeCollection: string, seed: any[]): Promise<void> {

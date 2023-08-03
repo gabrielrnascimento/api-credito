@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "dev": "ts-node-dev --respawn src/index.ts",
+    "dev": "ts-node-dev --respawn src/main/server.ts",
     "start": "node dist/index.js",
     "build": "rm -rf dist/ && tsc",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
@@ -23,6 +23,7 @@
   "devDependencies": {
     "@shelf/jest-mongodb": "^4.1.7",
     "@types/axios": "^0.14.0",
+    "@types/express": "^4.17.17",
     "@types/jest": "^29.5.3",
     "@types/mongodb": "^4.0.7",
     "@types/node": "^20.4.5",
@@ -38,6 +39,8 @@
   },
   "dependencies": {
     "axios": "^1.4.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
     "mongodb": "^5.7.0"
   }
 }
