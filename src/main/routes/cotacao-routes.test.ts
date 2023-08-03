@@ -46,4 +46,48 @@ describe('CotacaoRoutes', () => {
       dataVencimento: '2023-10-02'
     });
   });
+
+  test('deve retornar 400 caso campo obrigatório não tenha sido fornecido (nome)', async () => {
+    const resposta = await request(app)
+      .post('/api/cotacao');
+
+    expect(resposta.status).toBe(400);
+    expect(resposta.body).toEqual({ erro: 'Faltando campo obrigatório: nome' });
+  });
+
+  test('deve retornar 400 caso campo obrigatório não tenha sido fornecido (cep)', async () => {
+    const resposta = await request(app)
+      .post('/api/cotacao')
+      .send({
+        nome: 'qualquer nome'
+      });
+
+    expect(resposta.status).toBe(400);
+    expect(resposta.body).toEqual({ erro: 'Faltando campo obrigatório: cep' });
+  });
+
+  test('deve retornar 400 caso campo obrigatório não tenha sido fornecido (quantidade)', async () => {
+    const resposta = await request(app)
+      .post('/api/cotacao')
+      .send({
+        nome: 'qualquer nome',
+        cep: '12401-410'
+      });
+
+    expect(resposta.status).toBe(400);
+    expect(resposta.body).toEqual({ erro: 'Faltando campo obrigatório: quantidade' });
+  });
+
+  test('deve retornar 400 caso campo obrigatório não tenha sido fornecido (dataPagamento)', async () => {
+    const resposta = await request(app)
+      .post('/api/cotacao')
+      .send({
+        nome: 'qualquer nome',
+        cep: '12401-410',
+        quantidade: 10
+      });
+
+    expect(resposta.status).toBe(400);
+    expect(resposta.body).toEqual({ erro: 'Faltando campo obrigatório: dataPagamento' });
+  });
 });
