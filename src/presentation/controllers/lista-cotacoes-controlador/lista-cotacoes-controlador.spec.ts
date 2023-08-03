@@ -1,5 +1,5 @@
 import { ListaCotacoesStub } from '../../test';
-import { erroServidor } from '../../utils';
+import { erroServidor, semConteudo } from '../../utils';
 import { ListaCotacoesControlador } from './lista-cotacoes-controlador';
 
 type SutTypes = {
@@ -34,5 +34,14 @@ describe('ListaCotacoesControlador', () => {
     const resposta = await sut.trate();
 
     expect(resposta).toEqual(erroServidor(erro));
+  });
+
+  test('deve retornar 204 caso ListaCotacoes retorne uma lista vazia', async () => {
+    const { sut, listaCotacoesStub } = criaSut();
+    jest.spyOn(listaCotacoesStub, 'lista').mockResolvedValueOnce([]);
+
+    const resposta = await sut.trate();
+
+    expect(resposta).toEqual(semConteudo());
   });
 });
