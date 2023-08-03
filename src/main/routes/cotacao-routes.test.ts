@@ -104,4 +104,18 @@ describe('CotacaoRoutes', () => {
     expect(resposta.status).toBe(400);
     expect(resposta.body).toEqual({ erro: 'Data fornecida inválida' });
   });
+
+  test('deve retornar 404 caso estado não esteja na base de dados', async () => {
+    const resposta = await request(app)
+      .post('/api/cotacao')
+      .send({
+        nome: 'qualquer nome',
+        cep: '23898-810',
+        quantidade: 10,
+        dataPagamento: '2023-10-02'
+      });
+
+    expect(resposta.status).toBe(404);
+    expect(resposta.body).toEqual({ erro: 'Estado não encontrado na base de dados' });
+  });
 });
