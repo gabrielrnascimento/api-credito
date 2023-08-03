@@ -1,5 +1,6 @@
+import { mockModeloListaCotacoes } from '../../../data/test';
 import { ListaCotacoesStub } from '../../test';
-import { erroServidor, semConteudo } from '../../utils';
+import { erroServidor, ok, semConteudo } from '../../utils';
 import { ListaCotacoesControlador } from './lista-cotacoes-controlador';
 
 type SutTypes = {
@@ -43,5 +44,13 @@ describe('ListaCotacoesControlador', () => {
     const resposta = await sut.trate();
 
     expect(resposta).toEqual(semConteudo());
+  });
+
+  test('deve retornar 200 em caso de sucesso', async () => {
+    const { sut } = criaSut();
+
+    const resposta = await sut.trate();
+
+    expect(resposta).toEqual(ok(mockModeloListaCotacoes));
   });
 });
