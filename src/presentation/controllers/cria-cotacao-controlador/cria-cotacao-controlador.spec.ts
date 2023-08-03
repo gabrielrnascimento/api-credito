@@ -1,8 +1,7 @@
-import { type SaidaCriaCotacaoControladorDTO } from '../../../data/dtos';
 import { mockEntradaEncontraPrecoDTO, mockEntradaCalculaCreditoDTO, mockEntradaCriaCotacaoDTO } from '../../../data/test';
 import { ErroInesperado, ErroEstadoNaoEncontrado } from '../../../domain/errors';
 import { ErroRequisicaoInvalida, ErroNaoEncontrado } from '../../errors';
-import { EncontraEstadoStub, EncontraPrecoStub, CalculaCreditoStub, CriaCotacaoStub, mockRequisicaoHttpCriaCotacao, ValidadorStub } from '../../test';
+import { EncontraEstadoStub, EncontraPrecoStub, CalculaCreditoStub, CriaCotacaoStub, mockRequisicaoHttpCriaCotacao, ValidadorStub, mockSaidaCriaCotacao } from '../../test';
 import { requisicaoInvalida, naoEncontrado, erroServidor, criado } from '../../utils';
 import { CriaCotacaoControlador } from './cria-cotacao-controlador';
 
@@ -13,15 +12,6 @@ const mockRequisicaoHttp: any = {
     quantidade: 10,
     dataPagamento: '2023-09-26'
   }
-};
-
-const mockSaidaCriaCotacao: SaidaCriaCotacaoControladorDTO = {
-  id: 'qualquer_id',
-  nome: 'qualquer nome',
-  estado: 'SP',
-  quantidade: 10,
-  valor: 10924.2,
-  dataVencimento: '2023-09-26'
 };
 
 type SutTypes = {
