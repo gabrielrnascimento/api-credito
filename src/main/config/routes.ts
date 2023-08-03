@@ -9,7 +9,7 @@ export default (app: Express): void => {
     res.send({ body: 'hello, world!' });
   });
   readdirSync(join(__dirname, '../routes')).map(async file => {
-    if (!file.endsWith('.map')) {
+    if (!file.endsWith('.map') && !file.includes('.test.')) {
       (await import(`../routes/${file}`)).default(router);
     }
   });
