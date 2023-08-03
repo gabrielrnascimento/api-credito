@@ -1,4 +1,5 @@
 import { ListaCotacoesStub } from '../../test';
+import { erroServidor } from '../../utils';
 import { ListaCotacoesControlador } from './lista-cotacoes-controlador';
 
 type SutTypes = {
@@ -23,5 +24,15 @@ describe('ListaCotacoesControlador', () => {
     await sut.trate();
 
     expect(listaSpy).toHaveBeenCalled();
+  });
+
+  test('deve retornar 500 caso ListaCotacoes lance um erro', async () => {
+    const { sut, listaCotacoesStub } = criaSut();
+    const erro = new Error();
+    jest.spyOn(listaCotacoesStub, 'lista').mockRejectedValueOnce(erro);
+
+    const resposta = await sut.trate();
+
+    expect(resposta).toEqual(erroServidor(erro));
   });
 });
