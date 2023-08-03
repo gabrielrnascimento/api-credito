@@ -87,7 +87,7 @@ describe('CriaCotacaoControlador', () => {
 
     await sut.trate(mockRequisicaoHttp);
 
-    expect(validaSpy).toHaveBeenCalledWith(mockRequisicaoHttp);
+    expect(validaSpy).toHaveBeenCalledWith(mockRequisicaoHttp.body);
   });
 
   test('deve retornar 400 caso Validador retorne erro', async () => {
