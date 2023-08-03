@@ -6,6 +6,7 @@ import { CotacaoRepositorio } from '../../../infra/db/mongodb/cotacao-repositori
 import { EstadoRepositorio } from '../../../infra/db/mongodb/estado-repositorio/estado-repositorio';
 import { AxiosClienteHttp } from '../../../infra/http/axios-cliente-http';
 import { CriaCotacaoControlador } from '../../../presentation/controllers/cria-cotacao-controlador/cria-cotacao-controlador';
+import { geraCriaCotacaoControladorValidador } from '../validadores/cria-cotacao';
 import { mongoUtil } from '../../server';
 
 export const geraCriaCotacaoControladorFactory = (): CriaCotacaoControlador => {
@@ -16,6 +17,12 @@ export const geraCriaCotacaoControladorFactory = (): CriaCotacaoControlador => {
   const localCalculaCredito = new LocalCalculaCredito(parseFloat(process.env.TAXA_JUROS));
   const cotacaoRepositorio = new CotacaoRepositorio(mongoUtil);
   const dbCriaCotacao = new DbCriaCotacao(cotacaoRepositorio);
+  const validador = geraCriaCotacaoControladorValidador();
 
-  return new CriaCotacaoControlador(remotoEncontraEstado, dbEncontraPreco, localCalculaCredito, dbCriaCotacao);
+  return new CriaCotacaoControlador(
+    remotoEncontraEstado,
+    dbEncontraPreco,
+    localCalculaCredito,
+    dbCriaCotacao,
+    validador);
 };
