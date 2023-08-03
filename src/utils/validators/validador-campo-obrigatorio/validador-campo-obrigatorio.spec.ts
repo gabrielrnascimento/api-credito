@@ -22,4 +22,11 @@ describe('ValidadorCampoObrigatorio', () => {
 
     expect(erro).toEqual(new ErroCampoObrigatorioFaltando(campo));
   });
+
+  test('deve retornar falsy caso validaçao passe', () => {
+    const { sut, campo } = criaSut();
+    const erro = sut.valida({ [campo]: 'qualquer_valor' });
+
+    expect(erro).toBeFalsy();
+  });
 });
