@@ -24,4 +24,14 @@ describe('DbListaCotacoes', () => {
 
     expect(listaSpy).toHaveBeenCalled();
   });
+
+  test('deve lançar erro caso DbListaCotacoesRepositorio lance', async () => {
+    const { sut, dbListaCotacoesRepositorioStub } = criaSut();
+    const erro = new Error();
+    jest.spyOn(dbListaCotacoesRepositorioStub, 'lista').mockRejectedValueOnce(erro);
+
+    const promessa = sut.lista();
+
+    await expect(promessa).rejects.toThrow(erro);
+  });
 });
