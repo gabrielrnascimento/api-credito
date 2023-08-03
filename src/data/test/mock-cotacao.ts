@@ -12,7 +12,7 @@ export class DbCriaCotacaoRepositorioStub implements DbCriaCotacaoRepositorio {
 
 export class DbListaCotacoesRepositorioStub implements DbListaCotacoesRepositorio {
   async lista (): Promise<ModeloCotacao[]> {
-    return [mockModeloCotacao, mockModeloCotacao];
+    return mockModeloListaCotacoes;
   }
 }
 
@@ -42,3 +42,16 @@ export const mockModeloCotacao: ModeloCotacao = {
   dataCriacao: new Date(),
   dataVencimento: mockEntradaCriaCotacaoDTO.dataPagamento
 };
+
+export const mockModeloListaCotacoes: ModeloCotacao[] = [
+  mockModeloCotacao,
+  mockModeloCotacao,
+  mockModeloCotacao,
+  mockModeloCotacao,
+  mockModeloCotacao,
+  mockModeloCotacao,
+  mockModeloCotacao,
+  mockModeloCotacao,
+  mockModeloCotacao,
+  mockModeloCotacao
+];

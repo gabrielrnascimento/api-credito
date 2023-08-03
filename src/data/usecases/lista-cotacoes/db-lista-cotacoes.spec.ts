@@ -1,4 +1,4 @@
-import { DbListaCotacoesRepositorioStub } from '../../test';
+import { DbListaCotacoesRepositorioStub, mockModeloListaCotacoes } from '../../test';
 import { DbListaCotacoes } from './db-lista-cotacoes';
 
 type SutTypes = {
@@ -33,5 +33,13 @@ describe('DbListaCotacoes', () => {
     const promessa = sut.lista();
 
     await expect(promessa).rejects.toThrow(erro);
+  });
+
+  test('deve retornar lista de ModeloCotacao em caso de sucesso', async () => {
+    const { sut } = criaSut();
+
+    const resultado = await sut.lista();
+
+    expect(resultado).toBe(mockModeloListaCotacoes);
   });
 });
