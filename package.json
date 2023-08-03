@@ -8,6 +8,8 @@
     "build": "rm -rf dist/ && tsc",
     "build:start": "npm run build && npm start",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:unit": "npm test -- -c jest-unit-config.js",
+    "test:integration": "npm test -- -c jest-integration-config.js",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:vwatch": "npm run test:verbose -- --watch",
     "test:watch": "npm test -- --watch",
