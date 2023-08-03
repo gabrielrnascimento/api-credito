@@ -1,7 +1,7 @@
 import { type Router } from 'express';
 import { adapteExpressRoute } from '../adapters/adapte-express-route';
-import { geraCriaCotacaoControladorFactory } from '../factories/controladores/cria-cotacao';
+import { criaCotacaoControladorFactory } from '../factories/controladores/cria-cotacao';
 
 export default (router: Router): void => {
-  router.post('/cotacao', adapteExpressRoute(geraCriaCotacaoControladorFactory()));
+  router.post('/cotacao', adapteExpressRoute(criaCotacaoControladorFactory()));
 };

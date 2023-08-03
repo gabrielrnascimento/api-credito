@@ -1,7 +1,7 @@
 import { type Validador } from '../../../utils/interface';
 import { ValidadorCampoObrigatorio, ValidadorDataPagamento, ValidadorComposite } from '../../../utils/validators';
 
-export const geraCriaCotacaoControladorValidador = (): ValidadorComposite => {
+export const criaCotacaoControladorValidadorFactory = (): ValidadorComposite => {
   const validadores: Validador[] = [];
   for (const campo of ['nome', 'cep', 'quantidade', 'dataPagamento']) {
     validadores.push(new ValidadorCampoObrigatorio(campo));
