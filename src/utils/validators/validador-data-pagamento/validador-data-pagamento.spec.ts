@@ -3,11 +3,24 @@ import { ValidadorDataPagamento } from './validador.data-pagamento';
 
 jest.useFakeTimers({ now: new Date(2023, 0, 1) });
 
+type SutTypes = {
+  sut: ValidadorDataPagamento
+  campo: string
+};
+
+const criaSut = (): SutTypes => {
+  const campo = 'qualquerCampo';
+  const sut = new ValidadorDataPagamento(campo);
+  return {
+    sut,
+    campo
+  };
+};
+
 describe('ValidadorDataPagamento', () => {
   test('deve retornar ErroDataInvalida caso validaçao falhe', () => {
-    const campo = 'qualquerCampo';
+    const { sut, campo } = criaSut();
     const data = '2022-01-01';
-    const sut = new ValidadorDataPagamento(campo);
 
     const erro = sut.valida({ [campo]: data });
 
