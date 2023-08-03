@@ -41,4 +41,12 @@ describe('ValidadorComposite', () => {
 
     expect(erro).toEqual(new ErroDataInvalida());
   });
+
+  test('deve retornar falsy caso validações passem', () => {
+    const { sut, campo } = criaSut();
+
+    const erro = sut.valida({ [campo]: 'qualquer_valor' });
+
+    expect(erro).toBeFalsy();
+  });
 });
