@@ -31,4 +31,14 @@ describe('ListaCotacoes', () => {
     expect(resposta.status).toBe(200);
     expect(resposta.body).toEqual(mockSaidaListaCotacoes);
   });
+
+  test('deve retornar 204 caso não existam cotações', async () => {
+    cotacoesCollection = await mongoUtil.pegaCollection('cotacoes');
+    await cotacoesCollection.deleteMany({});
+
+    const resposta = await request(app)
+      .get('/api/cotacoes');
+
+    expect(resposta.status).toBe(204);
+  });
 });
