@@ -8,7 +8,6 @@ export class DbListaCotacoes implements ListaCotacoes {
   }
 
   async lista (): Promise<ModeloCotacao[]> {
-    await this.dbListaCotacoesRepositorio.lista();
-    return null;
+    return await this.dbListaCotacoesRepositorio.lista();
   }
 }
