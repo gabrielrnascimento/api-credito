@@ -1,6 +1,6 @@
 import { type ListaCotacoes } from '../../../domain/usecases';
 import { type Controlador, type RespostaHttp } from '../../interfaces';
-import { erroServidor } from '../../utils';
+import { erroServidor, semConteudo } from '../../utils';
 
 export class ListaCotacoesControlador implements Controlador {
   constructor (private readonly listaCotacoes: ListaCotacoes) {
@@ -9,7 +9,8 @@ export class ListaCotacoesControlador implements Controlador {
 
   async trate (): Promise<RespostaHttp> {
     try {
-      await this.listaCotacoes.lista();
+      const resposta = await this.listaCotacoes.lista();
+      return resposta.length ? null : semConteudo();
     } catch (erro) {
       return erroServidor(erro);
     }

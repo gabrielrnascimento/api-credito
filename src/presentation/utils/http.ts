@@ -6,6 +6,11 @@ export const criado = (dados: any = undefined): RespostaHttp => ({
   body: dados
 });
 
+export const semConteudo = (dados: any = undefined): RespostaHttp => ({
+  codigoStatus: 204,
+  body: dados
+});
+
 export const requisicaoInvalida = (erro: Error): RespostaHttp => ({
   codigoStatus: 400,
   body: erro
