@@ -1,12 +1,24 @@
 import { ErroCampoObrigatorioFaltando } from '../../errors';
 import { ValidadorCampoObrigatorio } from './validador-campo-obrigatorio';
 
+type SutTypes = {
+  sut: ValidadorCampoObrigatorio
+  campo: string
+};
+
+const criaSut = (): SutTypes => {
+  const campo = 'qualquerCampo';
+  const sut = new ValidadorCampoObrigatorio(campo);
+  return {
+    sut,
+    campo
+  };
+};
+
 describe('ValidadorCampoObrigatorio', () => {
   test('deve retornar ErroCampoObrigatorioFaltando caso validaçao falhe', () => {
-    const campo = 'qualquer_campo';
-    const sut = new ValidadorCampoObrigatorio(campo);
-
-    const erro = sut.valida({ campoInvalido: 'outro_campo' });
+    const { sut, campo } = criaSut();
+    const erro = sut.valida({ campoInvalido: 'qualquer_valor' });
 
     expect(erro).toEqual(new ErroCampoObrigatorioFaltando(campo));
   });
