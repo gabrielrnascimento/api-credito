@@ -90,4 +90,18 @@ describe('CotacaoRoutes', () => {
     expect(resposta.status).toBe(400);
     expect(resposta.body).toEqual({ erro: 'Faltando campo obrigatório: dataPagamento' });
   });
+
+  test('deve retornar 400 caso data fornecida seja inválida', async () => {
+    const resposta = await request(app)
+      .post('/api/cotacao')
+      .send({
+        nome: 'qualquer nome',
+        cep: '12401-410',
+        quantidade: 10,
+        dataPagamento: '2022-10-02'
+      });
+
+    expect(resposta.status).toBe(400);
+    expect(resposta.body).toEqual({ erro: 'Data fornecida inválida' });
+  });
 });
