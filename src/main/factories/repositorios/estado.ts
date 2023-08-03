@@ -1,6 +1,6 @@
 import { EstadoRepositorio } from '../../../infra/db/mongodb/estado-repositorio/estado-repositorio';
-import { mongoUtil } from '../../server';
+import { mongoUtilFactory } from '../database';
 
 export const estadoRepositorioFactory = (): EstadoRepositorio => {
-  return new EstadoRepositorio(mongoUtil);
+  return new EstadoRepositorio(mongoUtilFactory);
 };

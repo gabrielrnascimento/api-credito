@@ -1,15 +1,15 @@
 import 'dotenv/config';
-import { MongoUtil } from '../infra/db/mongodb/util/mongo-util';
 import { setupApp } from './config/app';
+import { mongoUtilFactory } from './factories/database';
 
 const app = setupApp();
 
-export const mongoUtil = new MongoUtil();
+const mongoUtil = mongoUtilFactory;
 
 mongoUtil.conecta(process.env.MONGO_URL)
   .then(async () => {
     app.listen(process.env.PORTA, async () => {
-      console.log(`Server is running on port ${process.env.PORTA}`);
+      console.log(`Servidor rodando na porta: ${process.env.PORTA}`);
     });
   })
   .catch((erro) => { console.error(erro); });
