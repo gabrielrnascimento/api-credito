@@ -10,6 +10,21 @@ let app: Express;
 let cotacoesCollection: Collection;
 const mongoUtil = mongoUtilFactory;
 
+const criaDataPagamento = (): string => {
+  const dataAtual = new Date();
+  const mesAtual = dataAtual.getMonth();
+  const anoAtual = dataAtual.getFullYear();
+
+  const mesPagamento = (mesAtual + 2) % 12;
+  const anoPagamento = anoAtual + Math.floor((mesAtual + 2) / 12);
+
+  const dataPagamento = new Date(dataAtual);
+  dataPagamento.setMonth(mesPagamento);
+  dataPagamento.setFullYear(anoPagamento);
+
+  return dataPagamento.toISOString().split('T')[0];
+};
+
 describe('CotacaoRoutes', () => {
   beforeAll(async () => {
     app = setupApp();
@@ -33,7 +48,7 @@ describe('CotacaoRoutes', () => {
         nome: 'qualquer nome',
         cep: '12401-410',
         quantidade: 10,
-        dataPagamento: '2023-10-02'
+        dataPagamento: criaDataPagamento()
       });
 
     expect(resposta.status).toBe(201);
@@ -43,7 +58,7 @@ describe('CotacaoRoutes', () => {
       estado: 'SP',
       quantidade: 10,
       valor: 10924.2,
-      dataVencimento: '2023-10-02'
+      dataVencimento: criaDataPagamento()
     });
   });
 
@@ -112,7 +127,7 @@ describe('CotacaoRoutes', () => {
         nome: 'qualquer nome',
         cep: '23898-810',
         quantidade: 10,
-        dataPagamento: '2023-10-02'
+        dataPagamento: criaDataPagamento()
       });
 
     expect(resposta.status).toBe(404);
