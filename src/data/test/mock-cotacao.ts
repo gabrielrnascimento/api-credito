@@ -1,12 +1,18 @@
 import { type ModeloCotacao } from '../../domain/models';
 import { type EntradaDbCriaCotacaoRepositorioDTO, type EntradaCriaCotacaoDTO } from '../dtos';
-import { type DbCriaCotacaoRepositorio } from '../interfaces';
+import { type DbListaCotacoesRepositorio, type DbCriaCotacaoRepositorio } from '../interfaces';
 import { mockCalculoCredito } from './mock-calculo';
 import { mockModeloEstado } from './mock-estado';
 
 export class DbCriaCotacaoRepositorioStub implements DbCriaCotacaoRepositorio {
   async cria (dados: EntradaDbCriaCotacaoRepositorioDTO): Promise<ModeloCotacao> {
     return mockModeloCotacao;
+  }
+}
+
+export class DbListaCotacoesRepositorioStub implements DbListaCotacoesRepositorio {
+  async lista (): Promise<ModeloCotacao[]> {
+    return mockModeloListaCotacoes;
   }
 }
 
@@ -36,3 +42,16 @@ export const mockModeloCotacao: ModeloCotacao = {
   dataCriacao: new Date(),
   dataVencimento: mockEntradaCriaCotacaoDTO.dataPagamento
 };
+
+export const mockModeloListaCotacoes: ModeloCotacao[] = [
+  mockModeloCotacao,
+  mockModeloCotacao,
+  mockModeloCotacao,
+  mockModeloCotacao,
+  mockModeloCotacao,
+  mockModeloCotacao,
+  mockModeloCotacao,
+  mockModeloCotacao,
+  mockModeloCotacao,
+  mockModeloCotacao
+];
