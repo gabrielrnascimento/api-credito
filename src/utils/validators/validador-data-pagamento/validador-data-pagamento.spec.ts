@@ -26,4 +26,13 @@ describe('ValidadorDataPagamento', () => {
 
     expect(erro).toEqual(new ErroDataInvalida());
   });
+
+  test('deve retornar falsy caso validaçao passe', () => {
+    const { sut, campo } = criaSut();
+    const data = '2024-01-01';
+
+    const erro = sut.valida({ [campo]: data });
+
+    expect(erro).toBeFalsy();
+  });
 });
