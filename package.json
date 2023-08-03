@@ -2,11 +2,11 @@
   "name": "api-credito",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
   "scripts": {
     "dev": "ts-node-dev --respawn src/main/server.ts",
-    "start": "node dist/index.js",
+    "start": "node dist/src/main/server.js",
     "build": "rm -rf dist/ && tsc",
+    "build:start": "npm run build && npm start",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:vwatch": "npm run test:verbose -- --watch",
