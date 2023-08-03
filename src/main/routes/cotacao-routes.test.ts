@@ -120,6 +120,20 @@ describe('CotacaoRoutes', () => {
     expect(resposta.body).toEqual({ erro: 'Data fornecida inválida' });
   });
 
+  test('deve retornar 400 caso cep fornecido seja inválido', async () => {
+    const resposta = await request(app)
+      .post('/api/cotacao')
+      .send({
+        nome: 'qualquer nome',
+        cep: '1',
+        quantidade: 10,
+        dataPagamento: criaDataPagamento()
+      });
+
+    expect(resposta.status).toBe(400);
+    expect(resposta.body).toEqual({ erro: 'Requisição inválida' });
+  });
+
   test('deve retornar 404 caso estado não esteja na base de dados', async () => {
     const resposta = await request(app)
       .post('/api/cotacao')
