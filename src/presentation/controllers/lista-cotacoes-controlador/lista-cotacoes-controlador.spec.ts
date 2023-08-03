@@ -1,5 +1,6 @@
-import { mockModeloListaCotacoes } from '../../../data/test';
-import { ListaCotacoesStub } from '../../test';
+import { mockModeloCotacao, mockModeloListaCotacoes } from '../../../data/test';
+import { type ModeloCotacao } from '../../../domain/models';
+import { ListaCotacoesStub, mockSaidaListaCotacoes } from '../../test';
 import { erroServidor, ok, semConteudo } from '../../utils';
 import { ListaCotacoesControlador } from './lista-cotacoes-controlador';
 
@@ -46,11 +47,38 @@ describe('ListaCotacoesControlador', () => {
     expect(resposta).toEqual(semConteudo());
   });
 
+  test('deve chamar formataResposta com os valores corretos', async () => {
+    const { sut } = criaSut();
+    const formataResposta = jest.spyOn((sut as any), 'formataResposta');
+
+    await sut.trate();
+
+    expect(formataResposta).toHaveBeenCalledWith(mockModeloListaCotacoes);
+  });
+
+  test('deve formatar os campos recebidos corretamente', async () => {
+    const { sut } = criaSut();
+
+    const respostaFormatada = (sut as any).formataResposta(mockModeloListaCotacoes);
+
+    const { nome, estado, quantidade, valor, dataVencimento } = mockModeloCotacao;
+
+    respostaFormatada.forEach((cotacao: ModeloCotacao) => {
+      expect(cotacao).toEqual({
+        nome,
+        estado,
+        quantidade,
+        valor,
+        dataVencimento: new Date(dataVencimento).toISOString().split('T')[0]
+      });
+    });
+  });
+
   test('deve retornar 200 em caso de sucesso', async () => {
     const { sut } = criaSut();
 
     const resposta = await sut.trate();
 
-    expect(resposta).toEqual(ok(mockModeloListaCotacoes));
+    expect(resposta).toEqual(ok(mockSaidaListaCotacoes));
   });
 });
