@@ -57,7 +57,6 @@ export class CriaCotacaoControlador implements Controlador {
         valor
       });
       saida = {
-        id: cotacao.id,
         nome: cotacao.nome,
         estado: cotacao.estado,
         quantidade: cotacao.quantidade,

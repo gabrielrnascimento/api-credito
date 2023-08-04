@@ -20,7 +20,6 @@ export type EntradaCriaCotacaoControladorDTO = {
 };
 
 export type SaidaCriaCotacaoControladorDTO = {
-  id: string
   nome: string
   estado: string
   quantidade: number
