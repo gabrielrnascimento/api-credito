@@ -52,7 +52,6 @@ describe('CriaCotacao', () => {
 
     expect(resposta.status).toBe(201);
     expect(resposta.body).toEqual({
-      id: expect.any(String),
       nome: 'qualquer nome',
       estado: 'SP',
       quantidade: 10,

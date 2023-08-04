@@ -10,7 +10,6 @@ export class CriaCotacaoStub implements CriaCotacao {
 }
 
 export const mockSaidaCriaCotacao: SaidaCriaCotacaoControladorDTO = {
-  id: 'qualquer_id',
   nome: 'qualquer nome',
   estado: 'SP',
   quantidade: 10,
