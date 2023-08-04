@@ -16,9 +16,13 @@
     "test:staged": "npm test -- --findRelatedTests",
     "test:coverage": "npm test -- --coverage",
     "prepare": "husky install",
+    "docker:start": "npm run docker:seed && npm start",
+    "docker:build": "docker compose up -d --build",
     "up": "docker compose up -d",
     "down": "docker compose down",
-    "seed": "seed -u 'mongodb://localhost:27017/culttivo' --drop-database ./data/seeds/"
+    "down:volumes": "docker compose down --volumes",
+    "seed": "seed -u 'mongodb://localhost:27017/culttivo' --drop-database ./data/seeds/",
+    "docker:seed": "seed -u 'mongodb://mongodb:27017/culttivo' --drop-database ./data/seeds/"
   },
   "author": "Gabriel Nascimento",
   "license": "ISC",
